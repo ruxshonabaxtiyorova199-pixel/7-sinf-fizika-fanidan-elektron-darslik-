@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7-sinf fizika — Jismlarning harakati</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#172033;--muted:#64748b;--accent:#2563eb;--good:#16a34a;--bad:#dc2626;--line:#dbe3ef}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,#1d4ed8,#4f46e5);color:#fff;padding:24px 18px}
+header h1{margin:0 0 7px;font-size:clamp(24px,4vw,38px)} header p{margin:0;opacity:.9}
+.wrap{max-width:1100px;margin:auto;padding:18px}
+.tabs{display:flex;gap:8px;overflow:auto;margin-bottom:16px}.tab{border:0;background:#e7edf7;padding:11px 15px;border-radius:12px;cursor:pointer;font-weight:700;white-space:nowrap}.tab.active{background:var(--accent);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px;box-shadow:0 5px 18px #1e293b0d}
+h2{margin-top:0}.definition{background:#eff6ff;border-left:5px solid var(--accent);padding:14px;border-radius:10px;font-size:18px}
+.scene{position:relative;height:330px;border-radius:16px;overflow:hidden;background:linear-gradient(#bfe7ff 0 58%,#91c56b 58% 73%,#4b5563 73% 87%,#79a9c9 87%);border:1px solid #cbd5e1}
+.roadline{position:absolute;left:0;right:0;top:80%;height:5px;background:repeating-linear-gradient(90deg,#fff 0 45px,transparent 45px 80px);opacity:.9}
+.car{position:absolute;top:68%;width:90px;height:42px;background:#ef4444;border-radius:12px 18px 8px 8px;transform:translateX(-50%);z-index:3;box-shadow:0 8px 12px #0002}.car:before{content:"";position:absolute;left:18px;top:-18px;width:48px;height:23px;background:#f87171;border-radius:12px 12px 3px 3px}.car:after{content:"●  ●";position:absolute;left:17px;top:28px;color:#111;font-size:24px;letter-spacing:28px}
+.tree{position:absolute;left:18%;bottom:27%;font-size:72px;z-index:2}.student{position:absolute;left:35%;top:45%;font-size:52px;z-index:4}.bus{position:absolute;left:12%;top:38%;width:330px;height:100px;background:#f59e0b;border-radius:18px;z-index:2}.bus:after{content:"";position:absolute;left:25px;right:25px;bottom:-18px;height:22px;background:#222;border-radius:12px;box-shadow:230px 0 #222}.window{position:absolute;top:15px;left:25px;right:25px;height:42px;background:#bde3f7;border-radius:8px;display:flex;justify-content:center;align-items:center;font-size:28px}
+.trail{position:absolute;top:73%;height:4px;background:#2563ebaa;border-radius:5px;z-index:1}.label{position:absolute;background:#fff;border:1px solid #cbd5e1;padding:7px 10px;border-radius:9px;font-weight:700;z-index:5;box-shadow:0 3px 8px #0001}
+.controls{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:14px}.btn{border:0;border-radius:10px;padding:10px 14px;background:#e2e8f0;cursor:pointer;font-weight:700}.btn.primary{background:var(--accent);color:#fff}.btn.good{background:#dcfce7;color:#166534}.btn.warn{background:#fee2e2;color:#991b1b}input[type=range]{accent-color:var(--accent);width:160px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.stat{padding:12px;background:#f8fafc;border-radius:12px;border:1px solid var(--line)}.stat b{display:block;font-size:20px;margin-top:4px}
+.axis{position:absolute;left:8%;right:8%;top:63%;height:3px;background:#334155}.axis:after{content:"";position:absolute;right:-2px;top:-7px;border-left:14px solid #334155;border-top:8px solid transparent;border-bottom:8px solid transparent}.origin{position:absolute;left:8%;top:58%;font-weight:800}.ticks{position:absolute;left:8%;right:8%;top:60%;display:flex;justify-content:space-between;font-size:13px}.movingCar{position:absolute;top:51%;width:70px;height:34px;background:#ef4444;border-radius:9px;transform:translateX(-50%);z-index:3}.movingCar:before{content:"";position:absolute;left:15px;top:-12px;width:38px;height:16px;background:#f87171;border-radius:8px}.feedback{margin-top:12px;padding:12px;border-radius:10px;display:none}.goodfb{display:block;background:#dcfce7;color:#166534}.badfb{display:block;background:#fee2e2;color:#991b1b}
+.question{margin-top:16px;padding:15px;background:#f8fafc;border-radius:13px}.answers{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.answers button{border:1px solid var(--line);background:#fff;padding:10px 13px;border-radius:9px;cursor:pointer}
+.hidden{display:none}.summary li{margin:9px 0}
+@media(max-width:650px){.stats{grid-template-columns:1fr}.scene{height:280px}.bus{transform:scale(.78);transform-origin:left top}.student{left:45%}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>🚗 Jismlarning harakati</h1><p>7-sinf fizika • Interaktiv dars simulyatsiyasi</p></div></header>
+<div class="wrap">
+<div class="tabs">
+<button class="tab active" onclick="showPart(1)">1. Mexanik harakat</button>
+<button class="tab" onclick="showPart(2)">2. Harakat nisbiyligi</button>
+<button class="tab" onclick="showPart(3)">3. Sanoq jism</button>
+<button class="tab" onclick="showPart(4)">4. Sanoq sistemasi</button>
+<button class="tab" onclick="showPart(5)">Xulosa</button>
+</div>
+
+<section id="p1" class="part">
+<div class="card"><h2>1. Mexanik harakatni batafsil o‘rganamiz</h2>
+<div class="definition"><b>Mexanik harakat</b> — jismning vaqt o‘tishi bilan boshqa jismlarga nisbatan o‘z vaziyatini o‘zgartirishidir.</div>
+<div class="scene" id="scene1"><div class="tree">🌳</div><div class="roadline"></div><div id="car1" class="car" style="left:15%"></div><div id="trail1" class="trail" style="left:15%;width:0"></div><div class="label" style="left:3%;top:7%">Boshlang‘ich holat</div><div class="label" style="right:3%;top:7%">Oxirgi holat</div></div>
+<div class="controls"><button class="btn primary" onclick="toggle1()" id="play1">▶ Play</button><button class="btn" onclick="reset1()">↺ Qayta boshlash</button><label>Tezlik: <input id="speed1" type="range" min="0.5" max="3" step=".5" value="1"></label></div>
+<div class="stats"><div class="stat">Vaqt<b id="time1">0.0 s</b></div><div class="stat">Bosib o‘tilgan yo‘l<b id="dist1">0 m</b></div><div class="stat">Trayektoriya<b>To‘g‘ri chiziq</b></div></div>
+<div class="question"><b>Interaktiv savol:</b> Avtomobil daraxtga nisbatan joyini o‘zgartirsa, u harakat qilayaptimi?<div class="answers"><button onclick="answer(this,true,'Ha. Chunki uning vaziyati vaqt o‘tishi bilan o‘zgardi.')">Ha</button><button onclick="answer(this,false,'Noto‘g‘ri. Vaziyatning vaqt davomida o‘zgarishi mexanik harakat deyiladi.')">Yo‘q</button></div><div class="feedback" id="fb1"></div></div>
+</div></section>
+
+<section id="p2" class="part hidden">
+<div class="card"><h2>2. Harakat nisbiyligi</h2>
+<p>Harakatni aniqlashda qaysi jismga nisbatan qaralayotgani muhim.</p>
+<div class="scene"><div class="bus" id="bus"><div class="window">🧑‍🎓</div></div><div class="tree">🌳</div><div class="label" style="left:3%;top:7%">Yo‘l chetidagi daraxt</div></div>
+<div class="controls"><button class="btn primary" onclick="toggleBus()" id="playBus">▶ Play</button><button class="btn" onclick="resetBus()">↺ Qayta boshlash</button></div>
+<div class="stats"><div class="stat">Avtobusga nisbatan<b>🧑‍🎓 Tinch</b></div><div class="stat">Daraxtga nisbatan<b>🧑‍🎓 Harakatda</b></div><div class="stat">Sabab<b>Taqqoslash jismi turlicha</b></div></div>
+<div class="definition">“Avtobusga nisbatan — <b>tinch</b>.” &nbsp;&nbsp; “Daraxtga nisbatan — <b>harakatda</b>.”</div>
+<div class="question"><b>Interaktiv savol:</b> Avtobus ichidagi o‘quvchi avtobusga nisbatan qanday holatda?<div class="answers"><button onclick="answer(this,true,'To‘g‘ri. O‘quvchining avtobusga nisbatan vaziyati o‘zgarmayapti.')">Tinch</button><button onclick="answer(this,false,'Noto‘g‘ri. Bu holatda o‘quvchi avtobusga nisbatan tinch.')">Harakatda</button></div><div class="feedback" id="fb2"></div></div>
+</div></section>
+
+<section id="p3" class="part hidden">
+<div class="card"><h2>3. Sanoq jism</h2>
+<div class="definition"><b>Sanoq jism</b> — boshqa jismlarning vaziyatini aniqlash uchun shartli ravishda tinch deb olinadigan jism.</div>
+<div class="scene"><div class="tree" style="left:18%">🌳</div><div class="label" style="left:10%;top:8%">Sanoq jism</div><div id="car3" class="car" style="left:22%"></div><div class="label" style="left:45%;top:8%">Avtomobilning turli holatlari →</div></div>
+<div class="controls"><button class="btn primary" onclick="toggle3()" id="play3">▶ Play</button><button class="btn" onclick="reset3()">↺ Qayta boshlash</button></div>
+<p>Avtomobil daraxtga nisbatan turli vaqtlarda turli joylarda bo‘ladi. Demak, uning <b>vaziyati o‘zgaradi</b>.</p>
+<div class="question"><b>Interaktiv savol:</b> Avtomobilning vaziyatini aniqlash uchun bu darsda qaysi jism sanoq jismi qilib olindi?<div class="answers"><button onclick="answer(this,true,'To‘g‘ri. Daraxt shartli ravishda tinch deb olindi.')">Daraxt</button><button onclick="answer(this,false,'Noto‘g‘ri. Bu simulyatsiyada sanoq jismi — daraxt.')">Avtomobil</button></div><div class="feedback" id="fb3"></div></div>
+</div></section>
+
+<section id="p4" class="part hidden">
+<div class="card"><h2>4. Sanoq sistemasi</h2>
+<div class="definition"><b>Sanoq sistemasi = sanoq jismi + koordinatalar sistemasi + vaqtni o‘lchash vositasi.</b></div>
+<div class="scene" id="scene4"><div class="tree" style="left:6%;bottom:27%">🌳</div><div class="label" style="left:2%;top:7%">Sanoq jism</div><div class="axis"></div><div class="origin">O</div><div class="ticks"><span>0 m</span><span>10 m</span><span>20 m</span><span>30 m</span><span>40 m</span><span>50 m</span></div><div id="car4" class="movingCar" style="left:8%"></div><div id="arrow" class="label" style="left:12%;top:37%">→</div></div>
+<div class="controls"><button class="btn primary" onclick="toggle4()" id="play4">▶ Play</button><button class="btn" onclick="reset4()">↺ Qayta boshlash</button><label>Avtomobil koordinatasi: <input id="pos4" type="range" min="0" max="100" value="0" oninput="manual4()"></label></div>
+<div class="stats"><div class="stat">Vaqt<b id="time4">0.0 s</b></div><div class="stat">Koordinata x<b id="x4">0 m</b></div><div class="stat">Yo‘nalish<b>→ musbat X</b></div></div>
+<div class="question"><b>Interaktiv savol:</b> Sanoq sistemasida vaqtni o‘lchash vositasi nima uchun kerak?<div class="answers"><button onclick="answer(this,true,'To‘g‘ri. Jism vaziyatining vaqt bo‘yicha o‘zgarishini aniqlash uchun vaqt kerak.')">Vaqtni aniqlash uchun</button><button onclick="answer(this,false,'Noto‘g‘ri. Vaqt vositasi harakatning vaqt davomida qanday o‘zgarishini aniqlashga xizmat qiladi.')">Faqat masofani o‘lchash uchun</button></div><div class="feedback" id="fb4"></div></div>
+</div></section>
+
+<section id="p5" class="part hidden">
+<div class="card summary"><h2>🎯 Xulosa</h2>
+<ol><li><b>Mexanik harakat</b> — jism vaziyatining vaqt davomida o‘zgarishi.</li><li><b>Harakat nisbiy</b> bo‘ladi.</li><li>Harakatni aniqlash uchun <b>sanoq jismi</b> tanlanadi.</li><li><b>Sanoq sistemasi</b> sanoq jismi, koordinatalar sistemasi va vaqtni o‘lchash vositasidan tashkil topadi.</li></ol>
+<div class="definition">⭐ Esda tuting: “Jism harakatdami yoki tinchmi?” degan savolga javob berishda avvalo <b>qaysi jismga nisbatan</b> qaralayotganini aniqlang.</div>
+</div></section>
+</div>
+<script>
+let timers={}, state={p1:false,p3:false,p4:false,bus:false}, t1=0,x1=15,t3=22,t4=0,tbus=12;
+function showPart(n){document.querySelectorAll('.part').forEach((x,i)=>x.classList.toggle('hidden',i!==n-1));document.querySelectorAll('.tab').forEach((x,i)=>x.classList.toggle('active',i===n-1));}
+function toggle1(){state.p1=!state.p1;document.getElementById('play1').textContent=state.p1?'⏸ Pause':'▶ Play';}
+function reset1(){state.p1=false;t1=0;x1=15;document.getElementById('play1').textContent='▶ Play';update1();}
+function update1(){document.getElementById('car1').style.left=x1+'%';document.getElementById('trail1').style.left='15%';document.getElementById('trail1').style.width=Math.max(0,x1-15)+'%';document.getElementById('time1').textContent=t1.toFixed(1)+' s';document.getElementById('dist1').textContent=Math.round((x1-15)*1.25)+' m';}
+function toggleBus(){state.bus=!state.bus;document.getElementById('playBus').textContent=state.bus?'⏸ Pause':'▶ Play'}
+function resetBus(){state.bus=false;tbus=12;document.getElementById('playBus').textContent='▶ Play';document.getElementById('bus').style.left=tbus+'%'}
+function toggle3(){state.p3=!state.p3;document.getElementById('play3').textContent=state.p3?'⏸ Pause':'▶ Play'}
+function reset3(){state.p3=false;t3=22;document.getElementById('play3').textContent='▶ Play';document.getElementById('car3').style.left=t3+'%'}
+function toggle4(){state.p4=!state.p4;document.getElementById('play4').textContent=state.p4?'⏸ Pause':'▶ Play'}
+function reset4(){state.p4=false;t4=0;document.getElementById('play4').textContent='▶ Play';document.getElementById('pos4').value=0;update4()}
+function manual4(){t4=0;update4()}
+function update4(){let v=+document.getElementById('pos4').value;document.getElementById('car4').style.left=(8+v*.84)+'%';document.getElementById('x4').textContent=Math.round(v*.5)+' m';document.getElementById('time4').textContent=t4.toFixed(1)+' s'}
+function answer(btn,ok,msg){let fb=btn.parentElement.nextElementSibling;fb.textContent=(ok?'✓ To‘g‘ri! ':'✗ ')+msg;fb.className='feedback '+(ok?'goodfb':'badfb')}
+setInterval(()=>{let sp=+document.getElementById('speed1').value;
+if(state.p1){t1+=.1*sp;x1+=.12*sp;if(x1>=85){x1=85;state.p1=false;document.getElementById('play1').textContent='▶ Play'}update1()}
+if(state.bus){tbus+=.18;if(tbus>72)tbus=12;document.getElementById('bus').style.left=tbus+'%'}
+if(state.p3){t3+=.2;if(t3>82){t3=22;state.p3=false;document.getElementById('play3').textContent='▶ Play'}document.getElementById('car3').style.left=t3+'%'}
+if(state.p4){t4+=.1;let v=Math.min(100,t4*10);document.getElementById('pos4').value=v;update4();if(v>=100){state.p4=false;document.getElementById('play4').textContent='▶ Play'}}
+},100);
+update1();update4();
+</script>
+</body>
+</html>
